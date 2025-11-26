@@ -6,5 +6,5 @@ module "state" {
 source = "github.com/Enzoleau/devops-
 base//td5/scripts/tofu/modules/state-bucket"
 
-name = "YOUR-UNIQUE-BUCKET-NAME" # Replace with a unique name
+name = "BUCKET_NAME" # Replace with a unique name
 }

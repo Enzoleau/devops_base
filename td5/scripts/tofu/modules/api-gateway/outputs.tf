@@ -1,4 +1,4 @@
 output "api_endpoint" {
-  value       = "https://api-placeholder.amazonaws.com/prod"
-  description = "URL de l'API Gateway (Placeholder pour le mock)"
+  description = "L'URL publique de l'API Gateway"
+  value       = aws_apigatewayv2_stage.default.invoke_url
 }
