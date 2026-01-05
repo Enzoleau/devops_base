@@ -2,9 +2,9 @@ name: Tofu Plan
 
 on:
   push:
-    branches: ["**"]      # Se lance sur toutes les branches (test)
+    branches: ["**"]
   pull_request:
-    branches: ["main"]    # Se lance sur les PR (prod)
+    branches: ["main"]
 
 permissions:
   id-token: write
@@ -23,7 +23,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: arn:aws:iam::750261420290:role/GithubActionsRole
+          role-to-assume: arn:aws:iam::750261420290:role/lambda-sample-plan
           role-session-name: plan-session
           aws-region: us-east-2
 
@@ -36,9 +36,7 @@ jobs:
           tofu init -no-color -input=false
           tofu plan -no-color -input=false -lock=false
 
-      # 👇 LE CHANGEMENT EST ICI 👇
       - uses: peter-evans/create-or-update-comment@v4
-        # On combine : Toujours exécuter (même si échec) MAIS seulement si c'est une PR
         if: always() && github.event_name == 'pull_request'
         env:
           RESULT_EMOJI: ${{ steps.plan.outcome == 'success' && '✅' || '⚠️' }}
